@@ -27,7 +27,9 @@ const io = new Server < ServerToClientEvents, InterServerEvents, ClientToServerE
 
 io.on("connection", (socket: Socket) => {
     console.log(`socket connected. ${socket.id}`);
-    socket.on("message", (message) => {
+
+    socket.on("message", (msg) => {
+      console.log(`from client-> ${msg}`);
       
       
     })
