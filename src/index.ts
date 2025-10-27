@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import { Server, Socket } from "socket.io";
 import http from "http";
+import { isMissingDeclaration } from "typescript";
 
 
 
@@ -28,9 +29,9 @@ const io = new Server < ServerToClientEvents, InterServerEvents, ClientToServerE
 io.on("connection", (socket: Socket) => {
     console.log(`socket connected. ${socket.id}`);
 
-    socket.on("message", (msg) => {
+    socket.on("message", (msg: string) => {
       console.log(`from client-> ${msg}`);
-      
+       socket.emit(msg);
       
     })
 })
