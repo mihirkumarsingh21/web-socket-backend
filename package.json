@@ -12,8 +12,10 @@
   "type": "module",
   "dependencies": {
     "@types/express": "^5.0.4",
+    "@types/socket.io": "^3.0.1",
     "@types/ws": "^8.18.1",
     "express": "^5.1.0",
+    "socket.io": "^4.8.1",
     "typescript": "^5.9.3",
     "ws": "^8.18.3"
   }
