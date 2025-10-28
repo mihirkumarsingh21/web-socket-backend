@@ -24,23 +24,17 @@ const app: Application = express();
 const server = http.createServer(app);
 
 const io = new Server < ServerToClientEvents, InterServerEvents, ClientToServerEvents > (server);
-
 io.on("connection", (socket: Socket) => {
-    console.log(`socket connected. ${socket.id}`);
-
-    socket.on("message", (msg) => {
-      console.log(`from client-> ${msg}`);
-
-      socket.emit("recived-msg", msg);
-      socket.broadcast.emit("newUser", "hello, everyone.!");
-      socket.on("join_room", (rooName) => {
-        socket.join(rooName);
-        socket.broadcast.to(rooName).emit("room_joined", `hey ${socket.id} joined this room.`)
-      })
-
-
+  console.log(`a user connected : ${socket.id}`);
   
-    })
+  socket.on("join_room", (username) => {
+    console.log(`${username} join room.`);
+    
+  })
+})
+
+app.get("/", (req, res) => {
+  res.send("hello world.")
 })
 
 
