@@ -23,14 +23,36 @@ const app: Application = express();
 
 const server = http.createServer(app);
 
+const ROOM = "group";
+
 const io = new Server < ServerToClientEvents, InterServerEvents, ClientToServerEvents > (server);
+
 io.on("connection", (socket: Socket) => {
   console.log(`a user connected : ${socket.id}`);
-  
-  socket.on("join_room", (username) => {
-    console.log(`${username} join room.`);
+
+  // JOIN ROOM
+    socket.on("join_room", async (username) => {
+    console.log(`${username} joing the group.`);
+      await socket.join(ROOM);
+
+     socket.to(ROOM).emit("notify", username);
+  })
+
+  // CHAT MESSAGE
+
+  socket.on("chat-message", async (msg) => {
+      socket.to(ROOM).emit("message-sent", msg);
+
+    console.log(`message recived : ${msg}`);
     
   })
+
+  socket.on("typing", (userName) => {
+    socket.to(ROOM).emit("typing", userName);
+    console.log(`${userName} is typing...`);
+    
+  })
+
 })
 
 app.get("/", (req, res) => {
