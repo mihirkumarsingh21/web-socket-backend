@@ -28,10 +28,18 @@ const io = new Server < ServerToClientEvents, InterServerEvents, ClientToServerE
 io.on("connection", (socket: Socket) => {
     console.log(`socket connected. ${socket.id}`);
 
-    socket.on("message", (msg: string) => {
+    socket.on("message", (msg) => {
       console.log(`from client-> ${msg}`);
-       socket.emit(msg);
-      
+
+      socket.emit("recived-msg", msg);
+      socket.broadcast.emit("newUser", "hello, everyone.!");
+      socket.on("join_room", (rooName) => {
+        socket.join(rooName);
+        socket.broadcast.to(rooName).emit("room_joined", `hey ${socket.id} joined this room.`)
+      })
+
+
+  
     })
 })
 
