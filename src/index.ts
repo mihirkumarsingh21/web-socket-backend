@@ -50,7 +50,10 @@ io.on("connection", (socket: Socket) => {
   socket.on("typing", (userName) => {
     socket.to(ROOM).emit("typing", userName);
     console.log(`${userName} is typing...`);
-    
+  })
+
+  socket.onAny((eventName, ...args) => {
+      
   })
 
 })
