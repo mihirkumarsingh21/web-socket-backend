@@ -52,9 +52,20 @@ io.on("connection", (socket: Socket) => {
     console.log(`${userName} is typing...`);
   })
 
-  socket.onAny((eventName, ...args) => {
-      
-  })
+    socket.on('hello', (arg1, arg2, arg3) => {
+    console.log(arg1); // 1
+    console.log(arg2); // '2'
+    console.log(arg3); // { 3: '4', 5: <Buffer 06> }
+  });
+
+   socket.on('request', (arg1, arg2, callback) => {
+    console.log(arg1); // { foo: 'bar' }
+    console.log(arg2); // 'baz'
+    callback({
+      status: 'ok'
+    });
+  });
+
 
 })
 
