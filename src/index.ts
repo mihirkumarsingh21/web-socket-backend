@@ -67,6 +67,18 @@ io.on("connection", (socket: Socket) => {
   });
 
 
+  socket.join('some room');
+  
+  // broadcast to all connected clients in the room
+  io.to('some room').emit('hello', 'world');
+
+  // broadcast to all connected clients except those in the room
+  io.except('some room').emit('hello', 'world');
+
+  // leave the room
+  socket.leave('some room');
+
+
 })
 
 app.get("/", (req, res) => {
